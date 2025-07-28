@@ -1,21 +1,25 @@
-import yaml
-import shutil
 import os
+import sys
+
 
 def generate_pipeline():
-    with open('blueprint/sample-blueprint.yaml') as f:
-        config = yaml.safe_load(f)
+    language = input("Enter your programming language (python/node): ").strip()
 
-    language = config.get('language')
-    template_path = f'templates/{language}-template.yml'
-
-    if os.path.exists(template_path):
-        os.makedirs('.github/workflows', exist_ok=True)
-        shutil.copy(template_path, '.github/workflows/main.yml')
-        print(f"✅ {language.capitalize()} CI/CD pipeline generated in .github/workflows/main.yml")
+    if language == "python":
+        template_file = "templates/python-ci.yml"
+    elif language == "node":
+        template_file = "templates/node-ci.yml"
     else:
-        print(f"❌ Template for language '{language}' not found!")
+        print("❌ Unsupported language")
+        sys.exit(1)
 
-if __name__ == "__main__":
-    generate_pipeline()
+    os.makedirs(".github/workflows", exist_ok=True)
+    os.system(f"cp {template_file} .github/workflows/main.yml")
 
+    print(
+        f"✅ {language.capitalize()} CI/CD pipeline generated "
+        "at .github/workflows/main.yml"
+    )
+
+
+generate_pipeline()
