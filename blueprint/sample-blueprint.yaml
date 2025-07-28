@@ -1,0 +1,12 @@
+project_name: sample-python-app
+language: python
+build_tool: pip
+deployment: docker
+branch_strategy: semantic
+stages:
+  - lint
+  - test
+  - security_scan
+  - package
+  - deploy
+
