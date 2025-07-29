@@ -20,12 +20,13 @@ jobs:
       - run: |
           pip install -r requirements.txt
           pytest
-
-  deploy:
+   
+    deploy:
     needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -36,3 +37,4 @@ jobs:
         run: |
           docker build -t pavanikoduru22/my-python-app:latest .
           docker push pavanikoduru22/my-python-app:latest
+
